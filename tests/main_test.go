@@ -1,4 +1,4 @@
-package main
+package tests
 
 import (
 	"encoding/json"
@@ -8,6 +8,7 @@ import (
 	router "go-backoffice-seller-api/src/utils"
 	"log"
 	"os"
+	"testing"
 
 	"github.com/jinzhu/gorm"
 )
@@ -19,12 +20,9 @@ var (
 	gDb        *gorm.DB
 )
 
-func main() {
-	startServer()
-}
-
-func startServer() {
+func TestMain(m *testing.M) {
 	initConfig()
+
 	httpRouter = router.NewMuxRouter()
 	httpRouter.ADDVERSION("/api/v1")
 
@@ -32,13 +30,13 @@ func startServer() {
 	gDb = gormDb.GetDatabase(config.Database)
 	gormDb.RunMigration()
 
-	initRoutes()
+	routes.UserRoute(gDb, httpRouter)
 
-	httpRouter.SERVE(config.App.Port)
+	os.Exit(m.Run())
 }
 
 func initConfig() {
-	file, err := os.Open("./config.json")
+	file, err := os.Open("../config.json")
 	if err != nil {
 		log.Printf("No ./config.json file found!! Terminating the server, error: %s\n", err.Error())
 		panic("No config file found! Error : " + err.Error())

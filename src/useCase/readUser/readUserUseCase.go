@@ -6,7 +6,7 @@ import (
 )
 
 type IReadUserUseCase interface {
-	GetUserService(id int) (*entities.User, error)
+	Execute(id int) (*entities.User, error)
 }
 
 type readUserUseCase struct{}
@@ -20,6 +20,6 @@ func NewReadUserUseCase(repository implementations.IUserRepository) IReadUserUse
 	return &readUserUseCase{}
 }
 
-func (readUserUseCase *readUserUseCase) GetUserService(id int) (*entities.User, error) {
+func (readUserUseCase *readUserUseCase) Execute(id int) (*entities.User, error) {
 	return userRepository.GetUserById(id)
 }

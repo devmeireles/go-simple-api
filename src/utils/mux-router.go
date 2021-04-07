@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"net/http"
+	"net/http/httptest"
 	"sync"
 
 	"github.com/gorilla/mux"
@@ -51,4 +52,10 @@ func (r *muxRouter) DELETE(uri string, f func(w http.ResponseWriter, r *http.Req
 func (r *muxRouter) SERVE(port string) {
 	log.Printf("Mux HTTP server running on port %v", port)
 	http.ListenAndServe(":"+port, r.client)
+}
+
+func (r *muxRouter) SERVEHTTP(rr *httptest.ResponseRecorder, req *http.Request) {
+	log.Printf("Mux HTTP server running tests")
+
+	r.client.ServeHTTP(rr, req)
 }

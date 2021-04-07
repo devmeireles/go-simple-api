@@ -1,6 +1,9 @@
 package utils
 
-import "net/http"
+import (
+	"net/http"
+	"net/http/httptest"
+)
 
 type IRouter interface {
 	GET(uri string, f func(w http.ResponseWriter, r *http.Request))
@@ -9,4 +12,5 @@ type IRouter interface {
 	DELETE(uri string, f func(w http.ResponseWriter, r *http.Request))
 	SERVE(port string)
 	ADDVERSION(uri string)
+	SERVEHTTP(rr *httptest.ResponseRecorder, req *http.Request)
 }

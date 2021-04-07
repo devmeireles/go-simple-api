@@ -13,7 +13,7 @@ func UserRoute(db *gorm.DB, httpRouter router.IRouter) router.IRouter {
 	readUserUseCase := readUser.NewReadUserUseCase(userRepository)
 	readUserController := readUser.NewReadUserController(readUserUseCase)
 
-	httpRouter.GET("/user/{id}", readUserController.GetUser)
+	httpRouter.GET("/user/{id}", readUserController.Handler)
 
 	return httpRouter
 }
