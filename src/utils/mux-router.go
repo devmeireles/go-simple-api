@@ -1,10 +1,11 @@
-package http
+package utils
 
 import (
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 	"sync"
+
+	"github.com/gorilla/mux"
 )
 
 type muxRouter struct {
@@ -12,8 +13,8 @@ type muxRouter struct {
 }
 
 var (
-	mR 			*muxRouter
-	routerOnce 	sync.Once
+	mR         *muxRouter
+	routerOnce sync.Once
 )
 
 // Making muxRouter instance as singleton
@@ -32,22 +33,22 @@ func (r *muxRouter) ADDVERSION(uri string) {
 }
 
 func (r *muxRouter) GET(uri string, f func(w http.ResponseWriter, r *http.Request)) {
-	r.client.HandleFunc(uri,f).Methods("GET")
+	r.client.HandleFunc(uri, f).Methods("GET")
 }
 
 func (r *muxRouter) POST(uri string, f func(w http.ResponseWriter, r *http.Request)) {
-	r.client.HandleFunc(uri,f).Methods("POST")
+	r.client.HandleFunc(uri, f).Methods("POST")
 }
 
 func (r *muxRouter) PUT(uri string, f func(w http.ResponseWriter, r *http.Request)) {
-	r.client.HandleFunc(uri,f).Methods("PUT")
+	r.client.HandleFunc(uri, f).Methods("PUT")
 }
 
 func (r *muxRouter) DELETE(uri string, f func(w http.ResponseWriter, r *http.Request)) {
-	r.client.HandleFunc(uri,f).Methods("DELETE")
+	r.client.HandleFunc(uri, f).Methods("DELETE")
 }
 
 func (r *muxRouter) SERVE(port string) {
 	log.Printf("Mux HTTP server running on port %v", port)
-	http.ListenAndServe(":" + port, r.client)
+	http.ListenAndServe(":"+port, r.client)
 }

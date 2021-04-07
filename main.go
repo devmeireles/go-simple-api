@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	configs "go-backoffice-seller-api/src/config"
 	"go-backoffice-seller-api/src/database"
-	router "go-backoffice-seller-api/src/http"
 	"go-backoffice-seller-api/src/routes"
+	router "go-backoffice-seller-api/src/utils"
 	"log"
 	"os"
 

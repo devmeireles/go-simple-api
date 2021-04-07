@@ -2,6 +2,7 @@ package readUser
 
 import (
 	"database/sql"
+	"go-backoffice-seller-api/src/utils"
 	"net/http"
 	"strconv"
 
@@ -27,18 +28,18 @@ func (userController *userController) GetUser(w http.ResponseWriter, r *http.Req
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid user ID")
+		utils.ResErr(w, err, http.StatusBadRequest)
 		return
 	}
 	user, err := readUserService.GetUserService(id)
 	if err != nil {
 		switch err {
 		case sql.ErrNoRows:
-			respondWithError(w, http.StatusNotFound, "User not found")
+			utils.ResErr(w, err, http.StatusNotFound)
 		default:
-			respondWithError(w, http.StatusInternalServerError, err.Error())
+			utils.ResErr(w, err, http.StatusInternalServerError)
 		}
 		return
 	}
-	respondWithJSON(w, http.StatusOK, user)
+	utils.ResSuc(w, user)
 }

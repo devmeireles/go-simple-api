@@ -1,9 +1,9 @@
 package routes
 
 import (
-	router "go-backoffice-seller-api/src/http"
 	"go-backoffice-seller-api/src/repositories/implementations"
 	"go-backoffice-seller-api/src/useCase/readUser"
+	router "go-backoffice-seller-api/src/utils"
 
 	"github.com/jinzhu/gorm"
 )
