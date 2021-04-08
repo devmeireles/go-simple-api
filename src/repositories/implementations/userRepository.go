@@ -9,7 +9,7 @@ import (
 type IUserRepository interface {
 	GetUserById(id int) (*entities.User, error)
 	// GetAllUsers() (*[]entities.User, error)
-	// CreateUser(user *entities.User) (*entities.User, error)
+	CreateUser(user *entities.User) (*entities.User, error)
 	// UpdateUser(user *entities.User) (*entities.User, error)
 	// DeleteUser(user *entities.User) error
 }
@@ -34,10 +34,10 @@ func (userRepository *userRepository) GetUserById(id int) (*entities.User, error
 // 	return &user, result.Error
 // }
 
-// func (userRepository *userRepository) CreateUser(user *entities.User) (*entities.User, error) {
-// 	result := userRepository.DB.Create(user)
-// 	return user, result.Error
-// }
+func (userRepository *userRepository) CreateUser(user *entities.User) (*entities.User, error) {
+	result := userRepository.DB.Create(user)
+	return user, result.Error
+}
 
 // func (userRepository *userRepository) UpdateUser(user *entities.User) (*entities.User, error) {
 // 	result := userRepository.DB.Save(user)

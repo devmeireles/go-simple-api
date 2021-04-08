@@ -23,7 +23,7 @@ func NewGormDatabase() IDatabaseEngine {
 }
 
 func InitDatabase(g *gormDatabase, config *config.Database) {
-	url := "host=localhost user=postgres password=doismundos dbname=shop port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	url := "host=localhost user=postgres password=doismundos dbname=ownshop port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 
 	db, err := gorm.Open(config.Engine, url)
 	if err != nil {
@@ -36,12 +36,6 @@ func InitDatabase(g *gormDatabase, config *config.Database) {
 }
 
 func InitTestDatabase(g *gormDatabase) {
-	// db, err := gorm.Open(sqlite.Open("gorm.db"))
-
-	// db, err := gorm.Open(sqlite.Open("./database/gorm.db"), &gorm.Config{
-	// 	Logger: logger.Default.LogMode(logger.Silent),
-	// })
-
 	db, err := gorm.Open("sqlite3", "database.db")
 
 	if err != nil {

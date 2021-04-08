@@ -12,7 +12,7 @@ type IReadUserController interface {
 	Handler(w http.ResponseWriter, r *http.Request)
 }
 
-type userController struct{}
+type readUserController struct{}
 
 var (
 	readUserService IReadUserUseCase
@@ -20,10 +20,10 @@ var (
 
 func NewReadUserController(useCase IReadUserUseCase) IReadUserController {
 	readUserService = useCase
-	return &userController{}
+	return &readUserController{}
 }
 
-func (userController *userController) Handler(w http.ResponseWriter, r *http.Request) {
+func (readUserController *readUserController) Handler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
