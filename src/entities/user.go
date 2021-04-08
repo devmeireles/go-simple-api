@@ -15,7 +15,7 @@ type User struct {
 	Language    string `gorm:"size:12;not null;default:'eng';" json:"language"`
 }
 
-func (base *BaseModel) BeforeCreate(scope *gorm.Scope) error {
+func (user *User) BeforeCreate(scope *gorm.Scope) error {
 	uuid := uuid.NewV4()
 	return scope.SetColumn("ID", uuid)
 }

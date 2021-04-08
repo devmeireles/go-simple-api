@@ -2,7 +2,6 @@ package createUser
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-backoffice-seller-api/src/entities"
 	"go-backoffice-seller-api/src/utils"
 	"io/ioutil"
@@ -45,7 +44,7 @@ func (createUserController *createUserController) Handler(w http.ResponseWriter,
 		return
 	}
 
-	fmt.Println(&user)
+	user.Password = utils.HashAndSalt([]byte(user.Password))
 
 	res, err := createUserService.Execute(&user)
 
