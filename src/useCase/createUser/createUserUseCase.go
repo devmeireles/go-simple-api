@@ -1,7 +1,6 @@
 package createUser
 
 import (
-	"fmt"
 	"go-backoffice-seller-api/src/entities"
 	"go-backoffice-seller-api/src/repositories/implementations"
 )
@@ -22,6 +21,5 @@ func NewCreateUserUseCase(repository implementations.IUserRepository) ICreateUse
 }
 
 func (createUserUseCase *createUserUseCase) Execute(user *entities.User) (*entities.User, error) {
-	fmt.Println(&user)
 	return userRepository.CreateUser(user)
 }

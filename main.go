@@ -53,4 +53,5 @@ func initConfig() {
 
 func initRoutes() {
 	routes.UserRoute(gDb, httpRouter)
+	routes.AuthRoute(gDb, httpRouter)
 }

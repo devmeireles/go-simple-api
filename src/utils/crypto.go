@@ -20,16 +20,12 @@ func HashAndSalt(pwd []byte) string {
 func ComparePasswords(hashedPwd string, plainPwd []byte) bool {
 	byteHash := []byte(hashedPwd)
 	err := bcrypt.CompareHashAndPassword(byteHash, plainPwd)
-	// if err != nil {
-	// 	return false
-	// }
-	// return true
 
 	return err == nil
 }
 
 func CreateToken(email string) (string, error) {
-	secret := "SETASECRETHERE"
+	secret := "SETASECRETHERESETASECRETHERESETASECRETHERESETASECRETHERESETASECRETHERE"
 	if secret == "" {
 		log.Fatal("$SECRET must be set")
 	}
@@ -48,7 +44,7 @@ func CreateToken(email string) (string, error) {
 }
 
 func ValidateToken(tokenString string) bool {
-	secret := "SETASECRETHERE"
+	secret := "SETASECRETHERESETASECRETHERESETASECRETHERESETASECRETHERESETASECRETHERE"
 	if secret == "" {
 		log.Fatal("$SECRET must be set")
 	}

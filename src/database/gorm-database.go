@@ -38,6 +38,8 @@ func InitDatabase(g *gormDatabase, config *config.Database) {
 func InitTestDatabase(g *gormDatabase) {
 	db, err := gorm.Open("sqlite3", "database.db")
 
+	db.LogMode(true)
+
 	if err != nil {
 		log.Println("Database connection failed : ", err)
 	} else {

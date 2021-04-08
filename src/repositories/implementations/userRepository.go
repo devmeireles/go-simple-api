@@ -8,6 +8,7 @@ import (
 
 type IUserRepository interface {
 	GetUserById(id int) (*entities.User, error)
+	GetUserByEmail(email string) (*entities.User, error)
 	// GetAllUsers() (*[]entities.User, error)
 	CreateUser(user *entities.User) (*entities.User, error)
 	// UpdateUser(user *entities.User) (*entities.User, error)
@@ -25,6 +26,12 @@ func NewUserRepository(db *gorm.DB) IUserRepository {
 func (userRepository *userRepository) GetUserById(id int) (*entities.User, error) {
 	var user entities.User
 	result := userRepository.DB.First(&user, id)
+	return &user, result.Error
+}
+
+func (userRepository *userRepository) GetUserByEmail(email string) (*entities.User, error) {
+	var user entities.User
+	result := userRepository.DB.Where("email = ?", email).Find(&user)
 	return &user, result.Error
 }
 
