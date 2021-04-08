@@ -9,6 +9,7 @@ import (
 	"go-backoffice-seller-api/src/config"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	_ "github.com/lib/pq"
 )
 
@@ -22,9 +23,6 @@ func NewGormDatabase() IDatabaseEngine {
 }
 
 func InitDatabase(g *gormDatabase, config *config.Database) {
-	// url := config.User + ":" + config.Password + "@tcp(" + config.Server + ":" +
-	// config.Port + ")/" + config.Name + "?charset=utf8mb4&parseTime=True&loc=Local"
-
 	url := "host=localhost user=postgres password=doismundos dbname=shop port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 
 	db, err := gorm.Open(config.Engine, url)
@@ -33,15 +31,36 @@ func InitDatabase(g *gormDatabase, config *config.Database) {
 	} else {
 		log.Println("Database connection established!")
 	}
-	log.Println("MySql connection running on port 3306")
+	log.Println("Database connection running")
+	g.client = db
+}
+
+func InitTestDatabase(g *gormDatabase) {
+	// db, err := gorm.Open(sqlite.Open("gorm.db"))
+
+	// db, err := gorm.Open(sqlite.Open("./database/gorm.db"), &gorm.Config{
+	// 	Logger: logger.Default.LogMode(logger.Silent),
+	// })
+
+	db, err := gorm.Open("sqlite3", "database.db")
+
+	if err != nil {
+		log.Println("Database connection failed : ", err)
+	} else {
+		log.Println("Database connection established!")
+	}
 	g.client = db
 }
 
 // Making sure gormClient only initialise once as singleton
-func (g *gormDatabase) GetDatabase(config config.Database) *gorm.DB {
+func (g *gormDatabase) GetDatabase(config config.Database, env string) *gorm.DB {
 	if g.client == nil {
 		g.once.Do(func() {
-			InitDatabase(g, &config)
+			if env == "test" {
+				InitTestDatabase(g)
+			} else {
+				InitDatabase(g, &config)
+			}
 		})
 	}
 	return g.client

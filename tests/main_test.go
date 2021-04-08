@@ -27,7 +27,7 @@ func TestMain(m *testing.M) {
 	httpRouter.ADDVERSION("/api/v1")
 
 	gormDb = database.NewGormDatabase()
-	gDb = gormDb.GetDatabase(config.Database)
+	gDb = gormDb.GetDatabase(config.Database, "test")
 	gormDb.RunMigration()
 
 	routes.UserRoute(gDb, httpRouter)

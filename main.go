@@ -29,7 +29,7 @@ func startServer() {
 	httpRouter.ADDVERSION("/api/v1")
 
 	gormDb = database.NewGormDatabase()
-	gDb = gormDb.GetDatabase(config.Database)
+	gDb = gormDb.GetDatabase(config.Database, "dev")
 	gormDb.RunMigration()
 
 	initRoutes()

@@ -8,6 +8,6 @@ import (
 
 type IDatabaseEngine interface {
 	// TODO read from config file
-	GetDatabase(config config.Database) *gorm.DB
+	GetDatabase(config config.Database, env string) *gorm.DB
 	RunMigration()
 }
