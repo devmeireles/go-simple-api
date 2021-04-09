@@ -49,7 +49,7 @@ func (createUserController *createUserController) Handler(w http.ResponseWriter,
 	res, err := createUserService.Execute(&user)
 
 	if err != nil {
-		utils.ResErr(w, err, http.StatusNotFound)
+		utils.ResErr(w, err, http.StatusBadRequest)
 		return
 	}
 	utils.ResSuc(w, res)
