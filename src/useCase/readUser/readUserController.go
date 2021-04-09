@@ -3,7 +3,6 @@ package readUser
 import (
 	"go-backoffice-seller-api/src/utils"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -25,11 +24,8 @@ func NewReadUserController(useCase IReadUserUseCase) IReadUserController {
 
 func (readUserController *readUserController) Handler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		utils.ResErr(w, err, http.StatusBadRequest)
-		return
-	}
+	id := vars["id"]
+
 	user, err := readUserService.Execute(id)
 	if err != nil {
 		utils.ResErr(w, err, http.StatusNotFound)

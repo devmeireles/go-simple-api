@@ -29,6 +29,12 @@ func ParseBody(content *httptest.ResponseRecorder) entities.ResponseMsg {
 
 }
 
+type CurrentUser struct {
+	userID string
+}
+
+var currentUser CurrentUser
+
 func TestUserModule(t *testing.T) {
 
 	t.Run("It should create a user", func(t *testing.T) {
@@ -45,20 +51,23 @@ func TestUserModule(t *testing.T) {
 		response := ExecuteRequest(req)
 		parsedBody := ParseBody(response)
 
+		userID := parsedBody.Data.(map[string]interface{})["id"]
+		currentUser.userID = userID.(string)
+
 		assert.True(t, parsedBody.Success)
 		assert.Equal(t, http.StatusOK, response.Code)
 	})
 
-	// t.Run("It should return a user", func(t *testing.T) {
-	// 	req, _ := http.NewRequest("GET", "/api/v1/user/1", nil)
-	// 	response := ExecuteRequest(req)
-	// 	parsedBody := ParseBody(response)
+	t.Run("It should return a user", func(t *testing.T) {
+		req, _ := http.NewRequest("GET", "/api/v1/user/"+currentUser.userID, nil)
+		response := ExecuteRequest(req)
+		parsedBody := ParseBody(response)
 
-	// 	assert.True(t, parsedBody.Success)
-	// 	assert.Equal(t, http.StatusOK, response.Code)
-	// 	assert.Empty(t, parsedBody.Message)
-	// 	assert.Contains(t, parsedBody.Data, "name")
-	// })
+		assert.True(t, parsedBody.Success)
+		assert.Equal(t, http.StatusOK, response.Code)
+		assert.Empty(t, parsedBody.Message)
+		assert.Contains(t, parsedBody.Data, "name")
+	})
 
 	// t.Run("It shouldn't return a user because he doesn't exist", func(t *testing.T) {
 	// 	req, _ := http.NewRequest("GET", "/api/v1/user/51", nil)
