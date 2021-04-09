@@ -32,6 +32,7 @@ func TestMain(m *testing.M) {
 	gormDb.RunMigration()
 
 	routes.UserRoute(gDb, httpRouter)
+	routes.AuthRoute(gDb, httpRouter)
 
 	os.Exit(m.Run())
 	gDb.DropTable(&entities.User{})

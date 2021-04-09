@@ -47,7 +47,6 @@ var wrongUser = entities.User{
 var currentUser CurrentUser
 
 func TestUserModule(t *testing.T) {
-
 	t.Run("POST", func(t *testing.T) {
 		t.Run("It should create a user", func(t *testing.T) {
 			var user = primaryUser

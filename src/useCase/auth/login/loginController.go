@@ -40,7 +40,7 @@ func (loginController *loginController) Handler(w http.ResponseWriter, r *http.R
 	res, err := loginService.Execute(&login)
 
 	if err != nil {
-		utils.ResErr(w, err, http.StatusNotFound)
+		utils.ResErr(w, err, http.StatusBadRequest)
 		return
 	}
 	utils.ResSuc(w, res)
