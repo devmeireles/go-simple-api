@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	configs "go-backoffice-seller-api/src/config"
 	"go-backoffice-seller-api/src/database"
+	"go-backoffice-seller-api/src/entities"
 	"go-backoffice-seller-api/src/routes"
 	router "go-backoffice-seller-api/src/utils"
 	"log"
@@ -33,6 +34,7 @@ func TestMain(m *testing.M) {
 	routes.UserRoute(gDb, httpRouter)
 
 	os.Exit(m.Run())
+	gDb.DropTable(&entities.User{})
 }
 
 func initConfig() {
@@ -47,8 +49,4 @@ func initConfig() {
 		log.Printf("Error occurred while decoding json to config model, error: %s\n", err.Error())
 		panic(err.Error())
 	}
-}
-
-func initRoutes() {
-	routes.UserRoute(gDb, httpRouter)
 }

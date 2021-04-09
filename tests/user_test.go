@@ -69,14 +69,14 @@ func TestUserModule(t *testing.T) {
 		assert.Contains(t, parsedBody.Data, "name")
 	})
 
-	// t.Run("It shouldn't return a user because he doesn't exist", func(t *testing.T) {
-	// 	req, _ := http.NewRequest("GET", "/api/v1/user/51", nil)
-	// 	response := ExecuteRequest(req)
-	// 	parsedBody := ParseBody(response)
+	t.Run("It shouldn't return a user because he doesn't exist", func(t *testing.T) {
+		req, _ := http.NewRequest("GET", "/api/v1/user/51", nil)
+		response := ExecuteRequest(req)
+		parsedBody := ParseBody(response)
 
-	// 	assert.False(t, parsedBody.Success)
-	// 	assert.Equal(t, http.StatusNotFound, response.Code)
-	// 	assert.NotEmpty(t, parsedBody.Message)
-	// 	assert.Empty(t, parsedBody.Data)
-	// })
+		assert.False(t, parsedBody.Success)
+		assert.Equal(t, http.StatusNotFound, response.Code)
+		assert.NotEmpty(t, parsedBody.Message)
+		assert.Empty(t, parsedBody.Data)
+	})
 }
