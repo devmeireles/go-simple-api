@@ -9,18 +9,16 @@ import (
 )
 
 type IMailProvider interface {
-	SendMail(email, name, language, subject string)
+	SendMail(email, name, language, subject, mailType string)
 }
 
-type mailRepository struct {
-	test string
-}
+type mailRepository struct{}
 
 func NewMailRepository() IMailProvider {
-	return &mailRepository{"Gabriel"}
+	return &mailRepository{}
 }
 
-func (mailRepository *mailRepository) SendMail(email, name, language, subject string) {
+func (mailRepository *mailRepository) SendMail(email, name, language, subject, mailType string) {
 	auth := smtp.PlainAuth("", "ab9923e8f2fbb7", "c667f912b0b652", "smtp.mailtrap.io")
 	from := "not-reply@ownershop.com"
 
@@ -32,7 +30,7 @@ func (mailRepository *mailRepository) SendMail(email, name, language, subject st
 
 	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
 	to := []string{email}
-	body := mailRepository.parseTemplate("./src/templates/email/create_account.html", templateData)
+	body := mailRepository.parseTemplate(mailType, templateData)
 	subjectBody := "Subject: " + subject + "!\n"
 	msg := []byte(subjectBody + mime + "\n" + body)
 
@@ -43,8 +41,9 @@ func (mailRepository *mailRepository) SendMail(email, name, language, subject st
 	}
 }
 
-func (mailRepository *mailRepository) parseTemplate(templateFileName string, data interface{}) string {
-	t, err := template.ParseFiles(templateFileName)
+func (mailRepository *mailRepository) parseTemplate(mailType string, data interface{}) string {
+	templateFile := mailRepository.chooseTemplateFile(mailType)
+	t, err := template.ParseFiles(templateFile)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -55,4 +54,14 @@ func (mailRepository *mailRepository) parseTemplate(templateFileName string, dat
 	}
 
 	return buf.String()
+}
+
+func (mailRepository *mailRepository) chooseTemplateFile(mailType string) string {
+	var template string
+	switch mailType {
+	case "CREATE_ACCOUNT":
+		template = "../src/templates/email/create_account.html"
+	}
+
+	return template
 }

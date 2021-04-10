@@ -24,7 +24,7 @@ func NewCreateUserUseCase(repository implementations.IUserRepository, mail imple
 
 func (createUserUseCase *createUserUseCase) Execute(user *entities.User) (*entities.User, error) {
 	msgSubject := "Ownshop - Welcome " + user.Name
-	mailRepository.SendMail(user.Email, user.Name, user.Language, msgSubject)
+	mailRepository.SendMail(user.Email, user.Name, user.Language, msgSubject, "CREATE_ACCOUNT")
 
 	return userRepository.CreateUser(user)
 }
