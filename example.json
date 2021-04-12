@@ -1,0 +1,13 @@
+{
+    "app" : {
+      "port": "3030"
+    },
+    "database":{
+      "engine": "DATABASE_ENGINE",
+      "server": "localhost",
+      "port": "5432",
+      "user": "DATABASE_USER",
+      "password": "APASSWORD",
+      "name" : "TABLENAME"
+    }
+  }
